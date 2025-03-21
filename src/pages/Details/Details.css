@@ -1,0 +1,128 @@
+.details {
+    padding-inline: 20px;
+}
+
+.details .hero {
+    max-width: 1200px;
+    border-radius: 40px;
+    height: 480px;
+    margin: 0 auto;
+    margin-top: 40px;
+}
+
+.details .hero img {
+    width: 100%;
+    height: 480px;
+    border-radius: 40px;
+    object-fit: cover;
+}
+
+.details .hero .block {
+    max-width: 560px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 40px;
+    border-radius: 40px;
+    background: #20283ECC;
+    backdrop-filter: blur(24px);
+    transform: translateY(-80px);
+    margin: 0 30px;
+}
+
+.details .hero .block span {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: #BEB7FB;
+}
+
+.details .hero .block h1 {
+    font-weight: 600;
+    font-size: clamp(17px, 5vw, 32px);
+    line-height: clamp(30px, 5vw, 40px);
+    letter-spacing: -2%;
+    color: #EBEEF5;
+}
+
+.details .info-block {
+    max-width: 1040px;
+    margin: 0 auto;
+    margin-top: 152px;
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+}
+
+.details .info-block .post {
+    max-width: 480px;
+    border-radius: 24px;
+    overflow: hidden;
+}
+
+.details .info-block .post img {
+    width: 100%;
+    height: 720px;
+    object-fit: cover;
+    border-radius: 24px;
+}
+
+.details .info-block .about-block {
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.details .info-block .about-block p {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 32px;
+    color: #8E95A9;
+}
+
+.details .info-block .about-block span {
+    max-width: 59px;
+    padding: 6px 6px;
+    border-radius: 8px;
+    background: #000000A6;
+    backdrop-filter: blur(8px);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #FFAD49;
+}
+
+.details .info-block .box-txt p{
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #767E94;
+}
+
+.details .info-block .box-txt h4 {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 32px;
+    color: #C3C8D4;
+}
+
+@media (max-width: 850px) {
+    .details .info-block {
+        justify-content: center;
+    }
+
+    .details .info-block .post {
+        display: none;
+    }
+}
+
+@media (max-width: 600px){
+    .details .hero .block {
+        align-items: center;
+    }
+
+    .details .hero .block h1 {
+        text-align: center;
+    }
+}

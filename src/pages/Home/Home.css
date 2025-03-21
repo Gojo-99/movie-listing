@@ -1,0 +1,165 @@
+.home {
+    padding: 80px 20px;
+    padding-inline: 20px;
+}
+
+.home .section {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.home .section .hereko {
+    max-width: 588px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 80px;
+}
+
+.home .section .hereko h1 {
+    font-weight: 600;
+    font-size: clamp(32px, 5vw, 64px);
+    line-height: clamp(40px, 5vw, 80px);
+    letter-spacing: -2%;
+    color: #EBEEF5;
+}
+
+.home .section .hereko p {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: grey;
+    hyphens: auto;
+}
+
+.home .section .hereko p span {
+    color: #7B6EF6;
+}
+
+.home .section .hereko .inp-box {
+    max-width: 344px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border: 1px solid #323B54;
+    border-radius: 12px;
+    background: #0000001A;
+    margin-top: 16px;
+}
+
+.home .section .hereko .inp-box img {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+.home .section .hereko .inp-box input {
+    width: 100%;
+    max-width: 277px;
+    padding: 12px 0;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    color: #475069;
+}
+
+.home .section .hereko .inp-box:focus-within {
+    border-color: #475270;
+}
+
+.home .section .movie-counter {
+    margin-bottom: 24px;
+}
+
+.home .section .movie-counter h1 {
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 40px;
+    letter-spacing: -2%;
+    color: #767E94;
+}
+
+.home .section .movie-counter h1 span {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #767E94;
+}
+
+
+.home .section .films {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.home .section .films a {
+    text-decoration: none;
+}
+
+.home .section .films .card {
+    max-width: 282px;
+    background: #20283ECC;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    backdrop-filter: blur(80px);
+    border-radius: 12px;
+    padding: 8px 8px;
+}
+
+.home .section .films .card .poster-box {
+    max-width: 266px;
+    height: 400px;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.home .section .films .card .poster-box span {
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: #000000A6;
+    backdrop-filter: blur(8px);
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #FFAD49;
+}
+
+.home .section .films .card .poster-box img {
+    width: 100%;
+    min-width: 266px;
+    height: 400px;
+    object-fit: cover;
+}
+
+.home .section .films .card p {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 2%;
+    color: #EBEEF5;
+    margin-bottom: 8px;
+}
+
+@media (max-width: 600px) {
+    .home .section .hereko {
+        align-items: center;
+    }
+
+    .home .section .hereko p {
+        text-align: center;
+    }
+
+    .home .section .movie-counter {
+        text-align: center;
+    }
+}
