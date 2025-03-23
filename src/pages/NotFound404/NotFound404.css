@@ -1,3 +1,7 @@
+.notfound {
+    padding-inline: 20px;
+}
+
 .notfound .error-block {
     max-width: 588px;
     margin: 0 auto;
