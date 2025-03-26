@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import './Details.css'
 
 const Details = () => {
@@ -9,7 +9,7 @@ const Details = () => {
             <div className="hero">
                 <img src={state.anime?.images.jpg.large_image_url} alt="" />
                 <div className="block">
-                    <span>Mailehereko / Movies</span>
+                    <span><Link to={'/'}>AnimePulse</Link> / Anime</span>
                     <h1>{state.anime?.title}</h1>
                 </div>
             </div>

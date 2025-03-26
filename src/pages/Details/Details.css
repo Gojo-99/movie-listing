@@ -30,6 +30,11 @@
     margin: 0 30px;
 }
 
+.details .hero .block a {
+    text-decoration: none;
+    color: #BEB7FB;
+}
+
 .details .hero .block span {
     font-weight: 400;
     font-size: 12px;

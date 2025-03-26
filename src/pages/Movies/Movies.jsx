@@ -13,13 +13,13 @@ const Movies = ({ anime }) => {
         <div className='movies'>
             <div className="section">
                 <div className="movies-hereko">
-                    <span>MaileHereko</span>
-                    <h1>Movies</h1>
+                    <span>AnimePulse</span>
+                    <h1>Anime</h1>
                     <div className='input-box'>
                         <img src={search} onClick={() => setIsSearchin(true)} />
                         <input
                             type='search'
-                            placeholder='Search Movies or Tv Shows'
+                            placeholder='Search Anime'
                             onChange={e => setSearchin(e.target.value)}
                         />
                     </div>

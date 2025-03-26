@@ -19,10 +19,10 @@ const Navbar = () => {
 					<div className='links'>
 						<ul>
 							<li>
-								<a href='/movies'>Movies</a>
+								<a href='/movies'>Anime</a>
 							</li>
 							<li>
-								<a href='/tvshows'>Tv Shows</a>
+								<a href='/tvshows'>Anime Films</a>
 							</li>
 							<li>
 								<a href='/suggestme'>Suggest me →</a>
@@ -36,8 +36,8 @@ const Navbar = () => {
 					<div className={`menu ${actived ? 'active' : ''}`}>
 						<div className='box'>
 							<div className='list'>
-								<a href='/movies'>Movies</a>
-								<a href='/tvshows'>Tv Shows</a>
+								<a href='/movies'>Anime</a>
+								<a href='/tvshows'>Anime Films</a>
 								<a href='suggestme'>Suggest Me →</a>
 								<a href='/dashboard'>Dashboard</a>
 							</div>
