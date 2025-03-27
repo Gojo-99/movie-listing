@@ -93,6 +93,11 @@
     backdrop-filter: blur(80px);
     border-radius: 12px;
     padding: 8px 8px;
+    transition: all 200ms;
+}
+
+.movies .section .movie-block .card:hover {
+    transform: scale(101%);
 }
 
 .movies .section .movie-block .card .poster-box {

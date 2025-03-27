@@ -22,7 +22,7 @@ const Navbar = () => {
 								<a href='/movies'>Anime</a>
 							</li>
 							<li>
-								<a href='/tvshows'>Anime Films</a>
+								<a href='/tvshows'>Manga</a>
 							</li>
 							<li>
 								<a href='/suggestme'>Suggest me →</a>
@@ -37,7 +37,7 @@ const Navbar = () => {
 						<div className='box'>
 							<div className='list'>
 								<a href='/movies'>Anime</a>
-								<a href='/tvshows'>Anime Films</a>
+								<a href='/tvshows'>Manga</a>
 								<a href='suggestme'>Suggest Me →</a>
 								<a href='/dashboard'>Dashboard</a>
 							</div>

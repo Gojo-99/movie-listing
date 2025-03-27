@@ -23,7 +23,7 @@ const Home = ({ movie }) => {
 						<img src={search} onClick={() => setIsSearch(true)} />
 						<input
 							type='search'
-							placeholder='Search anime'
+							placeholder='Search anime or manga'
 							onChange={e => setSearching(e.target.value)}
 						/>
 					</div>
