@@ -88,7 +88,7 @@ const Home = ({ movie, manga }) => {
 						? manga.map(e => {
 								if (e.title.includes(searching)) {
 									return (
-										<Link key={e.mal_id}>
+										<Link to={'/about_manga'} key={e.mal_id}>
 											<div className='card'>
 												<div className='poster-box'>
 													<img src={e.images.webp.large_image_url} alt='' />
@@ -107,7 +107,7 @@ const Home = ({ movie, manga }) => {
 						  })
 						: manga.map(e => {
 								return (
-									<Link key={e.mal_id} state={{ manga: e }}>
+									<Link to={'/about_manga'} key={e.mal_id} state={{ manga: e }}>
 										<div className='card'>
 											<div className='poster-box'>
 												<img src={e.images.webp.large_image_url} alt='' />

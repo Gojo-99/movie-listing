@@ -2,7 +2,6 @@ import './Anime.css'
 import search from '../../img/Left Icon.png'
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import InfiniteScroll from 'react-infinite-scroll-component'
 import { fetchAnimeData } from '../../MoreUrl'
 
 const Anime = () => {
@@ -14,14 +13,13 @@ const Anime = () => {
 
 	const [searchin, setSearchin] = useState('')
 
-	const loadAnimeData = async () => {
+	const loadAnimeData = async page => {
 		setLoading(true)
 		try {
-			console.log(`Fetching data for page ${page}`) 
+			console.log(`Fetching data for page ${page}`)
 			const data = await fetchAnimeData(page)
 			if (data.length > 0) {
-				setAnimeData(prevData => [...prevData, ...data])
-				setPage(prevPage => prevPage + 1)
+				setAnimeData(data)
 			} else {
 				setHasMore(false)
 			}
@@ -34,16 +32,26 @@ const Anime = () => {
 	}
 
 	useEffect(() => {
-		loadAnimeData()
+		loadAnimeData(page)
 	}, [page])
 
 	const filteredAnimeData = searchin
-		? animeData.filter(e => {
-			return (
+		? animeData.filter(e =>
 				e.title.toLowerCase().includes(searchin.toLowerCase())
-			)
-		})
-		: animeData 
+		)
+		: animeData
+
+	const handleNextPage = () => {
+		if (hasMore && !loading) {
+			setPage(prevPage => prevPage + 1)
+		}
+	}
+
+	const handlePreviousPage = () => {
+		if (page > 1) {
+			setPage(prevPage => prevPage - 1)
+		}
+	}
 
 	if (loading && page === 1) {
 		return <p className='p'>Загрузка...</p>
@@ -60,7 +68,7 @@ const Anime = () => {
 					<span>AnimePulse</span>
 					<h1>Anime</h1>
 					<div className='input-box'>
-						<img src={search} />
+						<img src={search} alt='search' />
 						<input
 							type='search'
 							placeholder='Search Anime'
@@ -72,32 +80,36 @@ const Anime = () => {
 
 				<div className='items'>items {filteredAnimeData.length}</div>
 
-				<InfiniteScroll
-					dataLength={filteredAnimeData.length}
-					next={loadAnimeData}
-					hasMore={hasMore}
-					loader={<p className='p'>Загрузка...</p>}
-					endMessage={<p className='p'>Больше данных нет.</p>}
-				>
-					<div className='movie-block'>
-						{filteredAnimeData.map(e => (
-							<Link to={'/details_page'} key={e.mal_id} state={{ anime: e }}>
-								<div className='card'>
-									<div className='poster-box'>
-										<img src={e.images.webp.large_image_url} alt='' />
-										<span>⁕ {e.score}</span>
-									</div>
-
-									<p>
-										{e.title.length > 20
-											? e.title.substring(0, 20) + '...'
-											: e.title}
-									</p>
+				<div className='movie-block'>
+					{filteredAnimeData.map(e => (
+						<Link to={'/details_page'} key={e.mal_id} state={{ anime: e }}>
+							<div className='card'>
+								<div className='poster-box'>
+									<img src={e.images.webp.large_image_url} alt='' />
+									<span>⁕ {e.score}</span>
 								</div>
-							</Link>
-						))}
-					</div>
-				</InfiniteScroll>
+
+								<p>
+									{e.title.length > 20
+										? e.title.substring(0, 20) + '...'
+										: e.title}
+								</p>
+							</div>
+						</Link>
+					))}
+				</div>
+
+				<div className='pagination'>
+					<button onClick={handlePreviousPage} disabled={loading || page === 1}>
+						Back
+					</button>
+					<span>{page}</span>
+					<button onClick={handleNextPage} disabled={loading || !hasMore}>
+						Next
+					</button>
+				</div>
+
+				{!hasMore && <p className='p'>Больше данных нет.</p>}
 			</div>
 		</div>
 	)

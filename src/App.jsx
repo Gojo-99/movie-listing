@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react'
 
 import axios from 'axios'
 import { Manga_Api, URL_API } from "./URL"
+import AboutManga from "./pages/AboutManga/AboutManga"
 
 
 const App = () => {
@@ -51,6 +52,7 @@ const App = () => {
           <Route path="/manga" element={<Manga />}/>
           <Route path="/suggestme" element={<SuggestMe />}/>
           <Route path="/details_page" element={<Details />}/>
+          <Route path="/about_manga" element={<AboutManga />}/>
           <Route path="*" element={<NotFound404 />}/>
         </Routes>
       </BrowserRouter>

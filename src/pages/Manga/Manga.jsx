@@ -1,11 +1,7 @@
 import './Manga.css'
-
 import search from '../../img/Left Icon.png'
-
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-
-import InfiniteScroll from 'react-infinite-scroll-component'
 import { fetchMangaData } from '../../MoreUrl'
 
 const Manga = () => {
@@ -17,15 +13,14 @@ const Manga = () => {
 
 	const [searching, setSearching] = useState('')
 
-	const loadMangaData = async () => {
+	const loadMangaData = async page => {
 		setLoading(true)
 		try {
 			const data = await fetchMangaData(page)
 			console.log('Loaded manga data:', data)
 
 			if (data.length > 0) {
-				setMangaData(prevData => [...prevData, ...data])
-				setPage(prevPage => prevPage + 1)
+				setMangaData(data)
 			} else {
 				setHasMore(false)
 			}
@@ -38,7 +33,7 @@ const Manga = () => {
 	}
 
 	useEffect(() => {
-		loadMangaData()
+		loadMangaData(page)
 	}, [page])
 
 	const filteredMangaData = searching
@@ -50,6 +45,18 @@ const Manga = () => {
 		: mangaData
 
 	console.log('Filtered manga data:', filteredMangaData)
+
+	const handleNextPage = () => {
+		if (hasMore && !loading) {
+			setPage(prevPage => prevPage + 1)
+		}
+	}
+
+	const handlePreviousPage = () => {
+		if (page > 1) {
+			setPage(prevPage => prevPage - 1)
+		}
+	}
 
 	if (loading && page === 1) {
 		return <p className='p'>Загрузка...</p>
@@ -78,36 +85,40 @@ const Manga = () => {
 
 				<div className='items'>items {filteredMangaData.length}</div>
 
-				<InfiniteScroll
-					dataLength={filteredMangaData.length}
-					next={loadMangaData}
-					hasMore={hasMore}
-					loader={<p className='p'>Загрузка...</p>}
-					endMessage={<p className='p'>Больше данных нет.</p>}
-				>
-					<div className='manga-block'>
-						{filteredMangaData.length === 0 && searching && (
-							<p>Ничего не найдено по запросу "{searching}"</p>
-						)}
+				<div className='manga-block'>
+					{filteredMangaData.length === 0 && searching && (
+						<p>Ничего не найдено по запросу "{searching}"</p>
+					)}
 
-						{filteredMangaData.map(e => (
-							<Link to={'/about_manga'} key={e.mal_id} state={{ manga: e }}>
-								<div className='card'>
-									<div className='poster-box'>
-										<img src={e.images.webp.large_image_url} alt='' />
-										<span>⁕ {e.score}</span>
-									</div>
-
-									<p>
-										{e.title.length > 20
-											? e.title.substring(0, 20) + '...'
-											: e.title}
-									</p>
+					{filteredMangaData.map(e => (
+						<Link to={'/about_manga'} key={e.mal_id} state={{ manga: e }}>
+							<div className='card'>
+								<div className='poster-box'>
+									<img src={e.images.webp.large_image_url} alt='' />
+									<span>⁕ {e.score}</span>
 								</div>
-							</Link>
-						))}
-					</div>
-				</InfiniteScroll>
+
+								<p>
+									{e.title.length > 20
+										? e.title.substring(0, 20) + '...'
+										: e.title}
+								</p>
+							</div>
+						</Link>
+					))}
+				</div>
+
+				<div className='pagination'>
+					<button onClick={handlePreviousPage} disabled={loading || page === 1}>
+						Back
+					</button>
+					<span>{page}</span>
+					<button onClick={handleNextPage} disabled={loading || !hasMore}>
+						Next
+					</button>
+				</div>
+
+				{!hasMore && <p className='p'>Больше данных нет.</p>}
 			</div>
 		</div>
 	)

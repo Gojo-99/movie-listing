@@ -7,15 +7,6 @@
     margin: 0 auto;
 }
 
-.p {
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 24px;
-    letter-spacing: 2%;
-    color: #EBEEF5;
-    text-align: center;
-}
-
 .movies .section .movies-hereko {
     max-width: 588px;
     display: flex;
@@ -143,6 +134,37 @@
     letter-spacing: 2%;
     color: #EBEEF5;
     margin-bottom: 8px;
+}
+
+.movies .section .pagination {
+    max-width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 44px;
+}
+
+.movies .section .pagination button {
+    border: none;
+    padding: 10px 34px;
+    border-radius: 10px;
+    background-color: #3e16cf;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 300ms;
+}
+
+.movies .section .pagination span {
+    font-size: 18px;
+    font-weight: 500;
+    color: #fff;
+    letter-spacing: 2px;
+}
+
+.movies .section .pagination button:hover {
+    background-color: #3e16cf62;
 }
 
 @media (max-width: 600px) {

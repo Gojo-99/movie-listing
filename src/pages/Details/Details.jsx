@@ -9,7 +9,7 @@ const Details = () => {
             <div className="hero">
                 <img src={state.anime?.images.jpg.large_image_url} alt="" />
                 <div className="block">
-                    <span><Link to={'/'}>AnimePulse</Link> / Anime</span>
+                    <span><Link to={'/'}>AnimePulse</Link> / <Link to={'/anime'}>Anime</Link></span>
                     <h1>{state.anime?.title}</h1>
                 </div>
             </div>
