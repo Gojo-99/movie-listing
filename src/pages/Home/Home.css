@@ -90,6 +90,25 @@
     color: #767E94;
 }
 
+.home .section .manga-counter {
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+.home .section .manga-counter h1 {
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 40px;
+    letter-spacing: -2%;
+    color: #767E94;
+}
+
+.home .section .manga-counter h1 span {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #767E94;
+}
 
 .home .section .films {
     display: flex;

@@ -7,6 +7,15 @@
     margin: 0 auto;
 }
 
+.p {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 2%;
+    color: #EBEEF5;
+    text-align: center;
+}
+
 .manga .section .manga-hereko {
     max-width: 588px;
     display: flex;
@@ -58,7 +67,6 @@
 .manga .section .manga-hereko .input-box img {
     width: 24px;
     height: 24px;
-    cursor: pointer;
 }
 
 .manga .section .manga-hereko .input-box:focus-within {

@@ -46,9 +46,9 @@ const App = () => {
         <Navbar />
 
         <Routes>
-          <Route path="/" element={<Home movie={film} />}/>
-          <Route path="/anime" element={<Anime anime={film}/>}/>
-          <Route path="/manga" element={<Manga manga={manga}/>}/>
+          <Route path="/" element={<Home movie={film} manga={manga} />}/>
+          <Route path="/anime" element={<Anime />}/>
+          <Route path="/manga" element={<Manga />}/>
           <Route path="/suggestme" element={<SuggestMe />}/>
           <Route path="/details_page" element={<Details />}/>
           <Route path="*" element={<NotFound404 />}/>

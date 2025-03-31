@@ -5,7 +5,7 @@ import search from '../../img/Left Icon.png'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 
-const Home = ({ movie }) => {
+const Home = ({ movie, manga }) => {
 	const [searching, setSearching] = useState('')
 	const [isSearch, setIsSearch] = useState(false)
 
@@ -15,9 +15,9 @@ const Home = ({ movie }) => {
 				<div className='hereko'>
 					<h1>AnimePulse</h1>
 					<p>
-						List of anime, I, <span>Pramod Poudel</span> have
-						watched till date. Explore what I have watched and also feel free to
-						make a suggestion. 😉
+						List of anime, I, <span>Pramod Poudel</span> have watched till date.
+						Explore what I have watched and also feel free to make a suggestion.
+						😉
 					</p>
 					<div className='inp-box'>
 						<img src={search} onClick={() => setIsSearch(true)} />
@@ -31,7 +31,7 @@ const Home = ({ movie }) => {
 
 				<div className='movie-counter'>
 					<h1>
-						All <span>({movie.length})</span>
+						Anime<span>({movie.length})</span>
 					</h1>
 				</div>
 
@@ -56,7 +56,7 @@ const Home = ({ movie }) => {
 										</Link>
 									)
 								}
-						})
+						  })
 						: movie.map(e => {
 								return (
 									<Link to={'details_page'} key={e.mal_id} state={{ anime: e }}>
@@ -74,7 +74,55 @@ const Home = ({ movie }) => {
 										</div>
 									</Link>
 								)
-						})}
+						  })}
+				</div>
+
+				<div className='manga-counter'>
+					<h1>
+						Manga<span>({movie.length})</span>
+					</h1>
+				</div>
+
+				<div className='films'>
+					{isSearch
+						? manga.map(e => {
+								if (e.title.includes(searching)) {
+									return (
+										<Link key={e.mal_id}>
+											<div className='card'>
+												<div className='poster-box'>
+													<img src={e.images.webp.large_image_url} alt='' />
+													<span>⁕ {e.score}</span>
+												</div>
+
+												<p>
+													{e.title.length > 20
+														? e.title.substring(0, 20) + '...'
+														: e.title}
+												</p>
+											</div>
+										</Link>
+									)
+								}
+						  })
+						: manga.map(e => {
+								return (
+									<Link key={e.mal_id} state={{ manga: e }}>
+										<div className='card'>
+											<div className='poster-box'>
+												<img src={e.images.webp.large_image_url} alt='' />
+												<span>⁕ {e.score}</span>
+											</div>
+
+											<p>
+												{e.title.length > 20
+													? e.title.substring(0, 20) + '...'
+													: e.title}
+											</p>
+										</div>
+									</Link>
+								)
+						  })}
 				</div>
 			</div>
 		</div>
