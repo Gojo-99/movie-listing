@@ -13,14 +13,19 @@ import axios from 'axios'
 import { Manga_Api, URL_API } from "./URL"
 import AboutManga from "./pages/AboutManga/AboutManga"
 
+import CircularProgress from '@mui/material/CircularProgress'
+
 
 const App = () => {
       const [film, setFilm] = useState([])
       const [manga, setManga] = useState([])
 
+      const [loadin, setloadin] = useState(false)
+
       function getFilms() {
           axios.get(URL_API)
           .then(res => {
+              setloadin(true)
               setFilm(res.data?.data)
               console.log(res.data.data)
           })
@@ -30,6 +35,7 @@ const App = () => {
       function getManga() {
         axios.get(Manga_Api)
         .then(res => {
+          setloadin(true)
           setManga(res.data?.data)
           console.log(res.data.data)
         })
@@ -40,6 +46,14 @@ const App = () => {
           getFilms()
           getManga()
       }, [])
+
+        if (!loadin) {
+					return (
+						<div className='spinner-box'>
+							<CircularProgress color='secondary' />
+						</div>
+					)
+				}
 
   return (
     <div>

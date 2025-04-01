@@ -2,6 +2,19 @@
     padding-inline: 20px;
 }
 
+.spinner-box {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.p {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+}
+
 .movies .section {
     max-width: 1200px;
     margin: 0 auto;

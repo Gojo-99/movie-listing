@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { fetchMangaData } from '../../MoreUrl'
 
+import CircularProgress from '@mui/material/CircularProgress'
+
 const Manga = () => {
 	const [mangaData, setMangaData] = useState([])
 	const [loading, setLoading] = useState(false)
@@ -59,7 +61,11 @@ const Manga = () => {
 	}
 
 	if (loading && page === 1) {
-		return <p className='p'>Загрузка...</p>
+		return (
+			<div className='spinner-box'>
+				<CircularProgress color='secondary' />
+			</div>
+		)
 	}
 
 	if (error) {

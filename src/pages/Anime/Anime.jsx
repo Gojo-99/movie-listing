@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { fetchAnimeData } from '../../MoreUrl'
 
+import CircularProgress from '@mui/material/CircularProgress'
+
 const Anime = () => {
 	const [animeData, setAnimeData] = useState([])
 	const [loading, setLoading] = useState(false)
@@ -53,8 +55,12 @@ const Anime = () => {
 		}
 	}
 
-	if (loading && page === 1) {
-		return <p className='p'>Загрузка...</p>
+	if (loading && page == 1) {
+		return (
+			<div className='spinner-box'>
+				<CircularProgress color='secondary' />
+			</div>
+		)
 	}
 
 	if (error) {
