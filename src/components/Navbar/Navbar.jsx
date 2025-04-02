@@ -43,7 +43,7 @@ const Navbar = () => {
 							</div>
 
 							<div className='btns'>
-								<a href='/signin'>Login →</a>
+								<a href='/login_page'>Login →</a>
 							</div>
 						</div>
 					</div>

@@ -1,0 +1,121 @@
+.login {
+    padding-inline: 20px;
+}
+
+.login .section {
+    max-width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    margin-top: 40px;
+}
+
+.login .section .poster-block {
+    max-width: 486px;
+    height: 560px;
+    background-color: #121829;
+    border-radius: 36px;
+    overflow: hidden;
+}
+
+.login .section .poster-block img {
+    max-width: 486px;
+    height: 560px;
+    object-fit: cover;
+}
+
+.login .section form {
+    width: 100%;
+    max-width: 486px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.login .section form h1 {
+    font-weight: 600;
+    font-size: 64px;
+    line-height: 80px;
+    letter-spacing: -2%;
+    color: #C3C8D4;
+}
+
+.login .section form .inputs {
+    max-width: 486px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.login .section form .inputs .email-inp {
+    max-width: 486px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 20px 16px;
+    border: 1px solid #323B54;
+    border-radius: 12px;
+    background: #0000001A;
+}
+
+.login .section form .inputs .email-inp input {
+    width: 100%;
+    padding: 12px 10px;
+    border: none;
+    outline: none;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    color: #475069;
+    background: transparent;
+}
+
+.login .section form .inputs .pass-inp {
+    max-width: 486px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 20px 16px;
+    border: 1px solid #323B54;
+    border-radius: 12px;
+    background: #0000001A;
+}
+
+.login .section form .inputs .pass-inp input {
+    width: 100%;
+    padding: 12px 10px;
+    border: none;
+    outline: none;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    color: #475069;
+    background: transparent;
+}
+
+.login .section form button {
+    border: 2px solid #7B6EF6;
+    border-radius: 12px;
+    background: #7B6EF6;
+    padding: 16px 0;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+@media (max-width: 1000px) {
+    .login .section {
+        justify-content: center;
+    }
+
+    .login .section form {
+        text-align: center;
+    }
+
+    .login .section .poster-block {
+        display: none;
+    }
+}

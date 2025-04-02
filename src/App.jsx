@@ -14,6 +14,7 @@ import { Manga_Api, URL_API } from "./URL"
 import AboutManga from "./pages/AboutManga/AboutManga"
 
 import CircularProgress from '@mui/material/CircularProgress'
+import Login from './pages/Login/Login'
 
 
 const App = () => {
@@ -67,6 +68,7 @@ const App = () => {
           <Route path="/suggestme" element={<SuggestMe />}/>
           <Route path="/details_page" element={<Details />}/>
           <Route path="/about_manga" element={<AboutManga />}/>
+          <Route path="/login_page" element={<Login />} />
           <Route path="*" element={<NotFound404 />}/>
         </Routes>
       </BrowserRouter>
