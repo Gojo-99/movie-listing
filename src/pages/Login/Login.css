@@ -106,6 +106,10 @@
     cursor: pointer;
 }
 
+.login .section form button:active {
+    background: transparent;
+}
+
 @media (max-width: 1000px) {
     .login .section {
         justify-content: center;

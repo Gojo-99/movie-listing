@@ -27,7 +27,7 @@ const Anime = () => {
 			}
 		} catch (error) {
 			console.error('Error fetching anime data', error)
-			setError('Произошла ошибка при загрузке данных')
+			setError('Error loading data 😕')
 		} finally {
 			setLoading(false)
 		}
@@ -115,7 +115,7 @@ const Anime = () => {
 					</button>
 				</div>
 
-				{!hasMore && <p className='p'>Больше данных нет.</p>}
+				{!hasMore && <p className='p'>There is no more data 🤷‍♂️</p>}
 			</div>
 		</div>
 	)
