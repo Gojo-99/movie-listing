@@ -5,7 +5,7 @@ const fetchAnimeData = async page => {
 	for (let attempt = 0; attempt < 5; attempt++) {
 		try {
 			const response = await fetch(
-				`https://api.jikan.moe/v4/anime?page=${page}`
+				`https://api.jikan.moe/v4/anime?page=${page}&limit=8`
 			)
 
 			if (response.status === 429) {
@@ -39,7 +39,7 @@ const fetchMangaData = async page => {
 	for (let attempt = 0; attempt < 5; attempt++) {
 		try {
 			const response = await fetch(
-				`https://api.jikan.moe/v4/manga?page=${page}`
+				`https://api.jikan.moe/v4/manga?page=${page}&limit=8`
 			)
 
 			if (response.status === 429) {
