@@ -9,6 +9,8 @@ const Home = ({ movie, manga }) => {
 	const [searching, setSearching] = useState('')
 	const [isSearch, setIsSearch] = useState(false)
 
+	const [activeTab, setActiveTab] = useState('all')
+
 	return (
 		<div className='home'>
 			<div className='section'>
@@ -29,100 +31,85 @@ const Home = ({ movie, manga }) => {
 					</div>
 				</div>
 
-				<div className='movie-counter'>
-					<h1>
-						Anime<span>({movie.length})</span>
-					</h1>
+				<div className='tab-switcher'>
+					<button
+						className={activeTab === 'all' ? 'tab active' : 'tab'}
+						onClick={() => setActiveTab('all')}
+					>
+						All
+					</button>
+					<button
+						className={activeTab === 'anime' ? 'tab active' : 'tab'}
+						onClick={() => setActiveTab('anime')}
+					>
+						Anime
+					</button>
+					<button
+						className={activeTab === 'manga' ? 'tab active' : 'tab'}
+						onClick={() => setActiveTab('manga')}
+					>
+						Manga
+					</button>
+				</div>
+
+				<div className='tab-header'>
+					{activeTab === 'all' && (
+						<>
+							All <span>({movie.length + manga.length})</span>
+						</>
+					)}
+					{activeTab === 'anime' && (
+						<>
+							Anime <span>({movie.length})</span>
+						</>
+					)}
+					{activeTab === 'manga' && (
+						<>
+							Manga <span>({manga.length})</span>
+						</>
+					)}
 				</div>
 
 				<div className='films'>
-					{isSearch
-						? movie.map(e => {
-								if (e.title.includes(searching)) {
-									return (
-										<Link to={'details_page'} key={e.mal_id}>
-											<div className='card'>
-												<div className='poster-box'>
-													<img src={e.images.webp.large_image_url} alt='' />
-													<span>⁕ {e.score}</span>
-												</div>
+					{(activeTab === 'all' || activeTab === 'anime') &&
+						(isSearch
+							? movie.filter(e => e.title.includes(searching))
+							: movie
+						).map(e => (
+							<Link to={'details_page'} key={e.mal_id} state={{ anime: e }}>
+								<div className='card'>
+									<div className='poster-box'>
+										<img src={e.images.webp.large_image_url} alt='' />
+										<span>⁕ {e.score}</span>
+									</div>
+									<p>
+										{e.title.length > 20
+											? e.title.substring(0, 20) + '...'
+											: e.title}
+									</p>
+								</div>
+							</Link>
+						))}
 
-												<p>
-													{e.title.length > 20
-														? e.title.substring(0, 20) + '...'
-														: e.title}
-												</p>
-											</div>
-										</Link>
-									)
-								}
-						  })
-						: movie.map(e => {
-								return (
-									<Link to={'details_page'} key={e.mal_id} state={{ anime: e }}>
-										<div className='card'>
-											<div className='poster-box'>
-												<img src={e.images.webp.large_image_url} alt='' />
-												<span>⁕ {e.score}</span>
-											</div>
-
-											<p>
-												{e.title.length > 20
-													? e.title.substring(0, 20) + '...'
-													: e.title}
-											</p>
-										</div>
-									</Link>
-								)
-						  })}
-				</div>
-
-				<div className='manga-counter'>
-					<h1>
-						Manga<span>({movie.length})</span>
-					</h1>
-				</div>
-
-				<div className='films'>
-					{isSearch
-						? manga.map(e => {
-								if (e.title.includes(searching)) {
-									return (
-										<Link to={'/about_manga'} key={e.mal_id}>
-											<div className='card'>
-												<div className='poster-box'>
-													<img src={e.images.webp.large_image_url} alt='' />
-													<span>⁕ {e.score}</span>
-												</div>
-
-												<p>
-													{e.title.length > 20
-														? e.title.substring(0, 20) + '...'
-														: e.title}
-												</p>
-											</div>
-										</Link>
-									)
-								}
-						  })
-						: manga.map(e => {
-								return (
-									<Link to={'/about_manga'} key={e.mal_id} state={{ manga: e }}>
-										<div className='card'>
-											<div className='poster-box'>
-												<img src={e.images.webp.large_image_url} alt='' />
-												<span>⁕ {e.score}</span>
-											</div>
-
-											<p>
-												{e.title.length > 20
-													? e.title.substring(0, 20) + '...'
-													: e.title}
-											</p>
-										</div>
-									</Link>
-								)
-						  })}
+					{(activeTab === 'all' || activeTab === 'manga') &&
+						(isSearch
+							? manga.filter(e => e.title.includes(searching))
+							: manga
+						).map(e => (
+							<Link to={'/about_manga'} key={e.mal_id} state={{ manga: e }}>
+								<div className='card'>
+									<div className='poster-box'>
+										<img src={e.images.webp.large_image_url} alt='' />
+										<span>⁕ {e.score}</span>
+									</div>
+									<p>
+										{e.title.length > 20
+											? e.title.substring(0, 20) + '...'
+											: e.title}
+									</p>
+								</div>
+							</Link>
+						))}
 				</div>
 			</div>
 		</div>

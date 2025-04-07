@@ -71,44 +71,6 @@
     border-color: #475270;
 }
 
-.home .section .movie-counter {
-    margin-bottom: 24px;
-}
-
-.home .section .movie-counter h1 {
-    font-weight: 600;
-    font-size: 32px;
-    line-height: 40px;
-    letter-spacing: -2%;
-    color: #767E94;
-}
-
-.home .section .movie-counter h1 span {
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    color: #767E94;
-}
-
-.home .section .manga-counter {
-    margin-top: 24px;
-    margin-bottom: 24px;
-}
-
-.home .section .manga-counter h1 {
-    font-weight: 600;
-    font-size: 32px;
-    line-height: 40px;
-    letter-spacing: -2%;
-    color: #767E94;
-}
-
-.home .section .manga-counter h1 span {
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    color: #767E94;
-}
 
 .home .section .films {
     display: flex;
@@ -174,6 +136,52 @@
     margin-bottom: 8px;
 }
 
+.home .section .tab-switcher {
+    max-width: 368px;
+    display: flex;
+    justify-content: space-around;
+    background-color: #0f172a;
+    backdrop-filter: blur(80px);
+    padding: 6px 8px;
+    border-radius: 8px;
+    margin: 20px 0;
+    height: 56px;
+    overflow: hidden;
+}
+
+.home .section .tab-switcher .tab {
+    padding: 8px 32px;
+    border: none;
+    background-color: #0f172a;
+    color: #8E95A9;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 2%;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.home .section .tab-switcher .tab.active {
+    background-color: #7B6EF6;
+    color: white;
+}
+
+.home .section .tab-header {
+    font-size: 24px;
+    font-weight: 700;
+    color: #64748b;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.home .section .tab-header span {
+    font-weight: 500;
+    font-size: 18px;
+    color: #64748b;
+}
+
+
 @media (max-width: 600px) {
     .home .section .hereko {
         align-items: center;
@@ -183,11 +191,11 @@
         text-align: center;
     }
 
-    .home .section .movie-counter {
-        text-align: center;
+    .home .section .tab-switcher {
+        margin: 0 auto;
     }
 
-    .home .section .manga-counter {
+    .home .section .tab-header {
         text-align: center;
     }
 }
