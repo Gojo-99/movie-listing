@@ -33,19 +33,19 @@ const Home = ({ movie, manga }) => {
 
 				<div className='tab-switcher'>
 					<button
-						className={activeTab === 'all' ? 'tab active' : 'tab'}
+						className={activeTab === 'all' ? 'tab actived' : 'tab'}
 						onClick={() => setActiveTab('all')}
 					>
 						All
 					</button>
 					<button
-						className={activeTab === 'anime' ? 'tab active' : 'tab'}
+						className={activeTab === 'anime' ? 'tab actived' : 'tab'}
 						onClick={() => setActiveTab('anime')}
 					>
 						Anime
 					</button>
 					<button
-						className={activeTab === 'manga' ? 'tab active' : 'tab'}
+						className={activeTab === 'manga' ? 'tab actived' : 'tab'}
 						onClick={() => setActiveTab('manga')}
 					>
 						Manga

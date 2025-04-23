@@ -3,6 +3,7 @@ import './Navbar.css'
 import logo from '../../img/logo.png'
 import icon from '../../img/icons8-menu.svg'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const Navbar = () => {
 	const [actived, isActived] = useState()
@@ -11,21 +12,22 @@ const Navbar = () => {
 			<div className='navbar'>
 				<header>
 					<div className='logo'>
-						<a href='/'>
+						<Link to={'/'}>
 							<img src={logo} alt='logotype' />
-						</a>
+						</Link>
 					</div>
 
 					<div className='links'>
 						<ul>
 							<li>
-								<a href='/anime'>Anime</a>
+								<Link to={'/anime'}>Anime</Link>
 							</li>
 							<li>
-								<a href='/manga'>Manga</a>
+								<Link to={'/manga'}>Manga</Link>
+								
 							</li>
 							<li>
-								<a href='/suggestme'>Suggest me →</a>
+								<Link to={'/suggestme'}>Suggest me →</Link>
 							</li>
 						</ul>
 					</div>
@@ -36,14 +38,14 @@ const Navbar = () => {
 					<div className={`menu ${actived ? 'active' : ''}`}>
 						<div className='box'>
 							<div className='list'>
-								<a href='/anime'>Anime</a>
-								<a href='/manga'>Manga</a>
-								<a href='suggestme'>Suggest Me →</a>
-								<a href='/dashboard'>Dashboard</a>
+								<Link to={'/anime'}>Anime</Link>
+								<Link to={'/manga'}>Manga</Link>
+								<Link to={'/suggestme'}>Suggest me →</Link>
+								<Link to={'/dashboard'}>Dashboard</Link>
 							</div>
 
 							<div className='btns'>
-								<a href='/login_page'>Login →</a>
+								<Link to={'/login_page'}>Login →</Link>
 							</div>
 						</div>
 					</div>

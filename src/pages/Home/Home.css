@@ -162,7 +162,7 @@
     cursor: pointer;
 }
 
-.home .section .tab-switcher .tab.active {
+.home .section .tab-switcher .tab.actived {
     background-color: #7B6EF6;
     color: white;
 }
