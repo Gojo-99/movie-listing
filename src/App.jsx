@@ -57,23 +57,23 @@ const App = () => {
 				}
 
   return (
-    <div>
-      <BrowserRouter>
-        <Navbar />
+		<div>
+			<BrowserRouter basename='/movie-listing'>
+				<Navbar />
 
-        <Routes>
-          <Route path="/" element={<Home movie={film} manga={manga} />}/>
-          <Route path="/anime" element={<Anime />}/>
-          <Route path="/manga" element={<Manga />}/>
-          <Route path="/suggestme" element={<SuggestMe />}/>
-          <Route path="/details_page" element={<Details />}/>
-          <Route path="/about_manga" element={<AboutManga />}/>
-          <Route path="/login_page" element={<Login />} />
-          <Route path="*" element={<NotFound404 />}/>
-        </Routes>
-      </BrowserRouter>
-    </div>
-  )
+				<Routes>
+					<Route path='/' element={<Home movie={film} manga={manga} />} />
+					<Route path='/anime' element={<Anime />} />
+					<Route path='/manga' element={<Manga />} />
+					<Route path='/suggestme' element={<SuggestMe />} />
+					<Route path='/details_page' element={<Details />} />
+					<Route path='/about_manga' element={<AboutManga />} />
+					<Route path='/login_page' element={<Login />} />
+					<Route path='*' element={<NotFound404 />} />
+				</Routes>
+			</BrowserRouter>
+		</div>
+	)
 }
 
 export default App
