@@ -58,7 +58,7 @@ const App = () => {
 
   return (
 		<div>
-			<BrowserRouter basename='/movie-listing'>
+			<BrowserRouter>
 				<Navbar />
 
 				<Routes>
