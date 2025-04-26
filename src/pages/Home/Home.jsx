@@ -1,15 +1,50 @@
 import './Home.css'
 
 import search from '../../img/Left Icon.png'
-
 import { Link } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+
+import axios from 'axios'
 
 const Home = ({ movie, manga }) => {
 	const [searching, setSearching] = useState('')
 	const [isSearch, setIsSearch] = useState(false)
 
 	const [activeTab, setActiveTab] = useState('all')
+
+	const [searchedAnime, setSearchedAnime] = useState([])
+	const [searchedManga, setSearchedManga] = useState([])
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				if (searching.trim() !== '') {
+					const animeRes = await axios.get(
+						`https://api.jikan.moe/v4/anime?q=${searching}&limit=10`
+					)
+					const mangaRes = await axios.get(
+						`https://api.jikan.moe/v4/manga?q=${searching}&limit=10`
+					)
+					setSearchedAnime(animeRes.data.data || [])
+					setSearchedManga(mangaRes.data.data || [])
+				} else {
+					setSearchedAnime([])
+					setSearchedManga([])
+				}
+			} catch (error) {
+				console.error('Ошибка при поиске:', error)
+			}
+		}
+
+		fetchData()
+	}, [searching])
+
+	const displayAnime = isSearch && searching ? searchedAnime : movie
+	const displayManga = isSearch && searching ? searchedManga : manga
+
+	const getImage = item => {
+		return item?.images?.webp?.large_image_url || item?.image_url || ''
+	}
 
 	return (
 		<div className='home'>
@@ -26,7 +61,11 @@ const Home = ({ movie, manga }) => {
 						<input
 							type='search'
 							placeholder='Search anime or manga'
-							onChange={e => setSearching(e.target.value)}
+							onChange={e => {
+								setSearching(e.target.value)
+								setIsSearch(true)
+							}}
+							value={searching}
 						/>
 					</div>
 				</div>
@@ -55,35 +94,32 @@ const Home = ({ movie, manga }) => {
 				<div className='tab-header'>
 					{activeTab === 'all' && (
 						<>
-							All <span>({movie.length + manga.length})</span>
+							All <span>({displayAnime.length + displayManga.length})</span>
 						</>
 					)}
 					{activeTab === 'anime' && (
 						<>
-							Anime <span>({movie.length})</span>
+							Anime <span>({displayAnime.length})</span>
 						</>
 					)}
 					{activeTab === 'manga' && (
 						<>
-							Manga <span>({manga.length})</span>
+							Manga <span>({displayManga.length})</span>
 						</>
 					)}
 				</div>
 
 				<div className='films'>
 					{(activeTab === 'all' || activeTab === 'anime') &&
-						(isSearch
-							? movie.filter(e => e.title.includes(searching))
-							: movie
-						).map(e => (
+						displayAnime.map(e => (
 							<Link to={'details_page'} key={e.mal_id} state={{ anime: e }}>
 								<div className='card'>
 									<div className='poster-box'>
-										<img src={e.images.webp.large_image_url} alt='' />
-										<span>⁕ {e.score}</span>
+										<img src={getImage(e)} alt={e.title} />
+										<span>⁕ {e.score ?? 'N/A'}</span>
 									</div>
 									<p>
-										{e.title.length > 20
+										{e.title?.length > 20
 											? e.title.substring(0, 20) + '...'
 											: e.title}
 									</p>
@@ -92,18 +128,15 @@ const Home = ({ movie, manga }) => {
 						))}
 
 					{(activeTab === 'all' || activeTab === 'manga') &&
-						(isSearch
-							? manga.filter(e => e.title.includes(searching))
-							: manga
-						).map(e => (
+						displayManga.map(e => (
 							<Link to={'/about_manga'} key={e.mal_id} state={{ manga: e }}>
 								<div className='card'>
 									<div className='poster-box'>
-										<img src={e.images.webp.large_image_url} alt='' />
-										<span>⁕ {e.score}</span>
+										<img src={getImage(e)} alt={e.title} />
+										<span>⁕ {e.score ?? 'N/A'}</span>
 									</div>
 									<p>
-										{e.title.length > 20
+										{e.title?.length > 20
 											? e.title.substring(0, 20) + '...'
 											: e.title}
 									</p>

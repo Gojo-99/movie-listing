@@ -3,25 +3,24 @@ import search from '../../img/Left Icon.png'
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { fetchAnimeData } from '../../MoreUrl'
-
 import CircularProgress from '@mui/material/CircularProgress'
 
 const Anime = () => {
 	const [animeData, setAnimeData] = useState([])
-	const [loading, setLoading] = useState(false)
+	const [loadingPage, setLoadingPage] = useState(false)
 	const [error, setError] = useState(null)
 	const [page, setPage] = useState(1)
 	const [hasMore, setHasMore] = useState(true)
 
 	const [searchin, setSearchin] = useState('')
 
-	const loadAnimeData = async page => {
-		setLoading(true)
+	const loadPageData = async (currentPage, searchQuery = '') => {
+		setLoadingPage(true)
 		try {
-			console.log(`Fetching data for page ${page}`)
-			const data = await fetchAnimeData(page)
+			const data = await fetchAnimeData(currentPage, searchQuery)
 			if (data.length > 0) {
 				setAnimeData(data)
+				setHasMore(true)
 			} else {
 				setHasMore(false)
 			}
@@ -29,22 +28,16 @@ const Anime = () => {
 			console.error('Error fetching anime data', error)
 			setError('Error loading data 😕')
 		} finally {
-			setLoading(false)
+			setLoadingPage(false)
 		}
 	}
 
 	useEffect(() => {
-		loadAnimeData(page)
-	}, [page])
-
-	const filteredAnimeData = searchin
-		? animeData.filter(e =>
-				e.title.toLowerCase().includes(searchin.toLowerCase())
-		)
-		: animeData
+		loadPageData(page, searchin)
+	}, [page, searchin])
 
 	const handleNextPage = () => {
-		if (hasMore && !loading) {
+		if (hasMore && !loadingPage) {
 			setPage(prevPage => prevPage + 1)
 		}
 	}
@@ -55,7 +48,12 @@ const Anime = () => {
 		}
 	}
 
-	if (loading && page == 1) {
+	const handleSearchChange = e => {
+		setPage(1) 
+		setSearchin(e.target.value)
+	}
+
+	if (loadingPage && searchin.trim() === '') {
 		return (
 			<div className='spinner-box'>
 				<CircularProgress color='secondary' />
@@ -78,16 +76,16 @@ const Anime = () => {
 						<input
 							type='search'
 							placeholder='Search Anime'
-							onChange={e => setSearchin(e.target.value)}
+							onChange={handleSearchChange}
 							value={searchin}
 						/>
 					</div>
 				</div>
 
-				<div className='items'>items {filteredAnimeData.length}</div>
+				<div className='items'>items {animeData.length}</div>
 
 				<div className='movie-block'>
-					{filteredAnimeData.map(e => (
+					{animeData.map(e => (
 						<Link to={'/details_page'} key={e.mal_id} state={{ anime: e }}>
 							<div className='card'>
 								<div className='poster-box'>
@@ -106,11 +104,14 @@ const Anime = () => {
 				</div>
 
 				<div className='pagination'>
-					<button onClick={handlePreviousPage} disabled={loading || page === 1}>
+					<button
+						onClick={handlePreviousPage}
+						disabled={loadingPage || page === 1}
+					>
 						Back
 					</button>
 					<span>{page}</span>
-					<button onClick={handleNextPage} disabled={loading || !hasMore}>
+					<button onClick={handleNextPage} disabled={loadingPage || !hasMore}>
 						Next
 					</button>
 				</div>
