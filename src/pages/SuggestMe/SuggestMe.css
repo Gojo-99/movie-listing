@@ -106,6 +106,21 @@
 
 .suggestme .section .results .anime-results a {
     text-decoration: none;
+    color: #7B6EF6;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 2%;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.suggestme .section .results .anime-results a img {
+    width: 100%;
+    max-width: 24px;
+    height: 24px;
 }
 
 .suggestme .section .results .anime-results .card {
@@ -171,6 +186,21 @@
 
 .suggestme .section .results .manga-results a {
     text-decoration: none;
+    color: #7B6EF6;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 2%;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.suggestme .section .results .manga-results a img {
+    width: 100%;
+    max-width: 24px;
+    height: 24px;
 }
 
 .suggestme .section .results .manga-results .card {

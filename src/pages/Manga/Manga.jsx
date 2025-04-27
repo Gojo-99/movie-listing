@@ -26,7 +26,7 @@ const Manga = () => {
 				setMangaData([])
 			}
 		} catch (error) {
-			setError('Произошла ошибка при загрузке данных')
+			setError('Error loading data 😕')
 			console.error('Error fetching manga data', error)
 		} finally {
 			setLoadingPage(false)
@@ -87,7 +87,7 @@ const Manga = () => {
 
 				<div className='manga-block'>
 					{mangaData.length === 0 && searching && (
-						<p>Ничего не найдено по запросу "{searching}"</p>
+						<p>Nothing found for your request 🤒</p>
 					)}
 
 					{mangaData.map(e => (
@@ -121,7 +121,7 @@ const Manga = () => {
 					</button>
 				</div>
 
-				{!hasMore && <p className='p'>Больше данных нет.</p>}
+				{!hasMore && <p className='eror'>There is no more data 🤷‍♂️</p>}
 			</div>
 		</div>
 	)

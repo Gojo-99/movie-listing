@@ -62,7 +62,7 @@ const Anime = () => {
 	}
 
 	if (error) {
-		return <p className='p'>{error}</p>
+		return <p className='err'>{error}</p>
 	}
 
 	return (
@@ -116,7 +116,7 @@ const Anime = () => {
 					</button>
 				</div>
 
-				{!hasMore && <p className='p'>There is no more data 🤷‍♂️</p>}
+				{!hasMore && <p className='d-err'>There is no more data 🤷‍♂️</p>}
 			</div>
 		</div>
 	)

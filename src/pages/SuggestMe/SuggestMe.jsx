@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom'
 
 import CircularProgress from '@mui/material/CircularProgress'
 
+import like from '../../img/like.png'
+
 const SuggestMe = () => {
 	const [searchQuery, setSearchQuery] = useState('')
 	const [animeResults, setAnimeResults] = useState([])
@@ -32,8 +34,8 @@ const SuggestMe = () => {
 			setAnimeResults(animeData.data || [])
 			setMangaResults(mangaData.data || [])
 		} catch (err) {
-			console.error('Ошибка при запросе:', err)
-			setError('Ошибка загрузки данных 😕')
+			console.error('Error while requesting:', err)
+			setError('Error loading data 😕')
 		} finally {
 			setLoading(false)
 		}
@@ -90,6 +92,12 @@ const SuggestMe = () => {
 												? anime.title.substring(0, 20) + '...'
 												: anime.title}
 										</p>
+
+										<div className='like'>
+											<a href='#'>
+												<img src={like} alt='like-icon' /> Suggest this
+											</a>
+										</div>
 									</div>
 								</Link>
 							))}
@@ -115,6 +123,12 @@ const SuggestMe = () => {
 												? manga.title.substring(0, 20) + '...'
 												: manga.title}
 										</p>
+
+										<div className='like'>
+											<a href='#'>
+												<img src={like} alt='like-icon' /> Suggest this
+											</a>
+										</div>
 									</div>
 								</Link>
 							))}
