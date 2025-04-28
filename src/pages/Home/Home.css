@@ -146,10 +146,12 @@
     border-radius: 8px;
     margin: 20px 0;
     height: 56px;
-    overflow: hidden;
+    overflow: scroll;
+    scrollbar-width: none;
 }
 
 .home .section .tab-switcher .tab {
+    max-width: 112px;
     padding: 8px 32px;
     border: none;
     background-color: #0f172a;
