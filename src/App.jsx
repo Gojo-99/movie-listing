@@ -20,6 +20,7 @@ import Login from './pages/Login/Login'
 const App = () => {
       const [film, setFilm] = useState([])
       const [manga, setManga] = useState([])
+      const [page, setPage] = useState(1)
 
       const [loadin, setloadin] = useState(false)
 
@@ -63,7 +64,7 @@ const App = () => {
 
 				<Routes>
 					<Route path='/' element={<Home movie={film} manga={manga} />} />
-					<Route path='/anime' element={<Anime />} />
+					<Route path='/anime' element={<Anime page={page} setPage={setPage} />} />
 					<Route path='/manga' element={<Manga />} />
 					<Route path='/suggestme' element={<SuggestMe />} />
 					<Route path='/details_page' element={<Details />} />
