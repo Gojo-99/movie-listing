@@ -151,7 +151,7 @@
 }
 
 .home .section .tab-switcher .tab {
-    max-width: 112px;
+    max-width: 130px;
     padding: 8px 32px;
     border: none;
     background-color: #0f172a;
@@ -183,6 +183,13 @@
     color: #64748b;
 }
 
+.home .section .loader {
+    max-width: 150px;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    margin-top: 20px;
+}
 
 @media (max-width: 600px) {
     .home .section .hereko {

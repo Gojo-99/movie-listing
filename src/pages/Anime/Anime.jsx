@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { fetchAnimeData } from '../../MoreUrl'
 import CircularProgress from '@mui/material/CircularProgress'
-import Aos from 'aos'
+
 
 const Anime = ({page, setPage}) => {
 	const [animeData, setAnimeData] = useState([])
@@ -35,7 +35,6 @@ const Anime = ({page, setPage}) => {
 
 	useEffect(() => {
 		loadPageData(page, searchin)
-		Aos.init()
 	}, [page, searchin])
 
 	const handleNextPage = () => {
@@ -72,7 +71,7 @@ const Anime = ({page, setPage}) => {
 			<div className='section'>
 				<div className='movies-hereko'>
 					<span>AnimePulse</span>
-					<h1 data-aos="fade-up">Anime</h1>
+					<h1>Anime</h1>
 					<div className='input-box'>
 						<img src={search} alt='search' />
 						<input

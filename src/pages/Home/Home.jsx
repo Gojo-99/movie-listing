@@ -1,50 +1,152 @@
 import './Home.css'
-
-import search from '../../img/Left Icon.png'
+import searchIcon from '../../img/Left Icon.png'
 import { Link } from 'react-router-dom'
-import { useState, useEffect } from 'react'
-
+import { useState, useEffect, useCallback } from 'react'
 import axios from 'axios'
+import CircularProgress from '@mui/material/CircularProgress'
+
+let debounceTimeout
 
 const Home = ({ movie, manga }) => {
 	const [searching, setSearching] = useState('')
 	const [isSearch, setIsSearch] = useState(false)
+	const [activeTab, setActiveTab] = useState('anime')
 
-	const [activeTab, setActiveTab] = useState('all')
-
+	const [animeList, setAnimeList] = useState(movie || [])
+	const [mangaList, setMangaList] = useState(manga || [])
 	const [searchedAnime, setSearchedAnime] = useState([])
 	const [searchedManga, setSearchedManga] = useState([])
 
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				if (searching.trim() !== '') {
-					const animeRes = await axios.get(
-						`https://api.jikan.moe/v4/anime?q=${searching}&limit=10`
-					)
-					const mangaRes = await axios.get(
-						`https://api.jikan.moe/v4/manga?q=${searching}&limit=10`
-					)
-					setSearchedAnime(animeRes.data.data || [])
-					setSearchedManga(mangaRes.data.data || [])
+	const [animePage, setAnimePage] = useState(1)
+	const [mangaPage, setMangaPage] = useState(1)
+	const [searchAnimePage, setSearchAnimePage] = useState(1)
+	const [searchMangaPage, setSearchMangaPage] = useState(1)
+
+	const [isFetching, setIsFetching] = useState(false)
+
+	const fetchData = async () => {
+		try {
+			let url = ''
+			if (isSearch && searching.trim()) {
+				if (activeTab === 'anime') {
+					url = `https://api.jikan.moe/v4/anime?q=${searching}&limit=10&page=${searchAnimePage}`
 				} else {
-					setSearchedAnime([])
-					setSearchedManga([])
+					url = `https://api.jikan.moe/v4/manga?q=${searching}&limit=10&page=${searchMangaPage}`
 				}
-			} catch (error) {
-				console.error('Ошибка при поиске:', error)
+			} else {
+				if (activeTab === 'anime') {
+					url = `https://api.jikan.moe/v4/anime?limit=10&page=${animePage}`
+				} else {
+					url = `https://api.jikan.moe/v4/manga?limit=10&page=${mangaPage}`
+				}
+			}
+
+			const res = await axios.get(url)
+			const data = res.data.data
+
+			if (isSearch && searching.trim()) {
+				if (activeTab === 'anime') {
+					setSearchedAnime(prev => [...prev, ...data])
+				} else {
+					setSearchedManga(prev => [...prev, ...data])
+				}
+			} else {
+				if (activeTab === 'anime') {
+					setAnimeList(prev => [...prev, ...data])
+				} else {
+					setMangaList(prev => [...prev, ...data])
+				}
+			}
+		} catch (err) {
+			console.error('Error loading:', err)
+		} finally {
+			setIsFetching(false)
+		}
+	}
+
+	useEffect(() => {
+		if (!isFetching) return
+
+		if (isSearch) {
+			if (activeTab === 'anime') setSearchAnimePage(p => p + 1)
+			else setSearchMangaPage(p => p + 1)
+		} else {
+			if (activeTab === 'anime') setAnimePage(p => p + 1)
+			else setMangaPage(p => p + 1)
+		}
+	}, [isFetching])
+
+	useEffect(() => {
+		if (isSearch) {
+			if (
+				(activeTab === 'anime' && searchAnimePage > 1) ||
+				(activeTab === 'manga' && searchMangaPage > 1)
+			) {
+				fetchData()
 			}
 		}
+	}, [searchAnimePage, searchMangaPage])
 
-		fetchData()
-	}, [searching])
+	useEffect(() => {
+		if (!isSearch) fetchData()
+	}, [animePage, mangaPage])
 
-	const displayAnime = isSearch && searching ? searchedAnime : movie
-	const displayManga = isSearch && searching ? searchedManga : manga
+	useEffect(() => {
+		const handleScroll = () => {
+			if (
+				window.innerHeight + window.scrollY + 100 >=
+					document.body.offsetHeight &&
+				!isFetching
+			) {
+				setIsFetching(true)
+			}
+		}
+		window.addEventListener('scroll', handleScroll)
+		return () => window.removeEventListener('scroll', handleScroll)
+	}, [isFetching])
 
-	const getImage = item => {
-		return item?.images?.webp?.large_image_url || item?.image_url || ''
+	const debouncedSearch = useCallback(
+		value => {
+			clearTimeout(debounceTimeout)
+			debounceTimeout = setTimeout(() => {
+				setIsSearch(!!value.trim())
+
+				if (value.trim()) {
+					if (activeTab === 'anime') {
+						setSearchedAnime([])
+						setSearchAnimePage(1)
+					} else {
+						setSearchedManga([])
+						setSearchMangaPage(1)
+					}
+				}
+			}, 500)
+		},
+		[activeTab]
+	)
+
+	const handleSearchChange = e => {
+		setSearching(e.target.value)
+		debouncedSearch(e.target.value)
 	}
+
+	useEffect(() => {
+		if (isSearch && searching.trim()) {
+			fetchData()
+		}
+	}, [activeTab])
+
+	const displayList =
+		activeTab === 'anime'
+			? isSearch
+				? searchedAnime
+				: animeList
+			: isSearch
+			? searchedManga
+			: mangaList
+
+	const getImage = item =>
+		item?.images?.webp?.large_image_url || item?.image_url || ''
 
 	return (
 		<div className='home'>
@@ -57,26 +159,17 @@ const Home = ({ movie, manga }) => {
 						😉
 					</p>
 					<div className='inp-box'>
-						<img src={search} onClick={() => setIsSearch(true)} />
+						<img src={searchIcon} alt='search' />
 						<input
 							type='search'
 							placeholder='Search anime or manga'
-							onChange={e => {
-								setSearching(e.target.value)
-								setIsSearch(true)
-							}}
+							onChange={handleSearchChange}
 							value={searching}
 						/>
 					</div>
 				</div>
 
 				<div className='tab-switcher'>
-					<button
-						className={activeTab === 'all' ? 'tab actived' : 'tab'}
-						onClick={() => setActiveTab('all')}
-					>
-						All
-					</button>
 					<button
 						className={activeTab === 'anime' ? 'tab actived' : 'tab'}
 						onClick={() => setActiveTab('anime')}
@@ -92,58 +185,37 @@ const Home = ({ movie, manga }) => {
 				</div>
 
 				<div className='tab-header'>
-					{activeTab === 'all' && (
-						<>
-							All <span>({displayAnime.length + displayManga.length})</span>
-						</>
-					)}
-					{activeTab === 'anime' && (
-						<>
-							Anime <span>({displayAnime.length})</span>
-						</>
-					)}
-					{activeTab === 'manga' && (
-						<>
-							Manga <span>({displayManga.length})</span>
-						</>
-					)}
+					{activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}{' '}
+					<span>({displayList.length})</span>
 				</div>
 
 				<div className='films'>
-					{(activeTab === 'all' || activeTab === 'anime') &&
-						displayAnime.map(e => (
-							<Link to={'details_page'} key={e.mal_id} state={{ anime: e }}>
-								<div className='card'>
-									<div className='poster-box'>
-										<img src={getImage(e)} alt={e.title} />
-										<span>⁕ {e.score ?? 'N/A'}</span>
-									</div>
-									<p>
-										{e.title?.length > 20
-											? e.title.substring(0, 20) + '...'
-											: e.title}
-									</p>
+					{displayList.map(item => (
+						<Link
+							key={item.mal_id}
+							to={activeTab === 'anime' ? 'details_page' : '/about_manga'}
+							state={{ [activeTab]: item }}
+						>
+							<div className='card'>
+								<div className='poster-box'>
+									<img src={getImage(item)} alt={item.title} />
+									<span>⁕ {item.score ?? 'N/A'}</span>
 								</div>
-							</Link>
-						))}
-
-					{(activeTab === 'all' || activeTab === 'manga') &&
-						displayManga.map(e => (
-							<Link to={'/about_manga'} key={e.mal_id} state={{ manga: e }}>
-								<div className='card'>
-									<div className='poster-box'>
-										<img src={getImage(e)} alt={e.title} />
-										<span>⁕ {e.score ?? 'N/A'}</span>
-									</div>
-									<p>
-										{e.title?.length > 20
-											? e.title.substring(0, 20) + '...'
-											: e.title}
-									</p>
-								</div>
-							</Link>
-						))}
+								<p>
+									{item.title.length > 20
+										? item.title.slice(0, 20) + '...'
+										: item.title}
+								</p>
+							</div>
+						</Link>
+					))}
 				</div>
+
+				{isFetching && (
+					<div className='loader'>
+						<CircularProgress color='secondary' />
+					</div>
+				)}
 			</div>
 		</div>
 	)
