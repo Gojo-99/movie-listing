@@ -5,11 +5,10 @@ import { useState, useEffect } from 'react'
 import { fetchMangaData } from '../../MoreUrl'
 import CircularProgress from '@mui/material/CircularProgress'
 
-const Manga = () => {
+const Manga = ({page2, setPage2}) => {
 	const [mangaData, setMangaData] = useState([])
 	const [loadingPage, setLoadingPage] = useState(false)
 	const [error, setError] = useState(null)
-	const [page, setPage] = useState(1)
 	const [hasMore, setHasMore] = useState(true)
 
 	const [searching, setSearching] = useState('')
@@ -34,23 +33,23 @@ const Manga = () => {
 	}
 
 	useEffect(() => {
-		loadMangaData(page, searching)
-	}, [page, searching])
+		loadMangaData(page2, searching)
+	}, [page2, searching])
 
 	const handleSearchChange = e => {
-		setPage(1) 
+		setPage2(1) 
 		setSearching(e.target.value)
 	}
 
 	const handleNextPage = () => {
 		if (hasMore && !loadingPage) {
-			setPage(prevPage => prevPage + 1)
+			setPage2(prevPage => prevPage + 1)
 		}
 	}
 
 	const handlePreviousPage = () => {
-		if (page > 1) {
-			setPage(prevPage => prevPage - 1)
+		if (page2 > 1) {
+			setPage2(prevPage => prevPage - 1)
 		}
 	}
 
@@ -111,11 +110,11 @@ const Manga = () => {
 				<div className='pagination'>
 					<button
 						onClick={handlePreviousPage}
-						disabled={loadingPage || page === 1}
+						disabled={loadingPage || page2 === 1}
 					>
 						Back
 					</button>
-					<span>{page}</span>
+					<span>{page2}</span>
 					<button onClick={handleNextPage} disabled={loadingPage || !hasMore}>
 						Next
 					</button>

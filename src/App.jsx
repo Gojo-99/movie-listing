@@ -21,6 +21,7 @@ const App = () => {
       const [film, setFilm] = useState([])
       const [manga, setManga] = useState([])
       const [page, setPage] = useState(1)
+      const [page2, setPage2] = useState(1)
 
       const [loadin, setloadin] = useState(false)
 
@@ -65,7 +66,7 @@ const App = () => {
 				<Routes>
 					<Route path='/' element={<Home movie={film} manga={manga} />} />
 					<Route path='/anime' element={<Anime page={page} setPage={setPage} />} />
-					<Route path='/manga' element={<Manga />} />
+					<Route path='/manga' element={<Manga page2={page2} setPage2={setPage2} />} />
 					<Route path='/suggestme' element={<SuggestMe />} />
 					<Route path='/details_page' element={<Details />} />
 					<Route path='/about_manga' element={<AboutManga />} />

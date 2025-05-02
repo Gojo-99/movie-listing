@@ -164,6 +164,7 @@
     letter-spacing: 2%;
     color: #EBEEF5;
     margin-bottom: 8px;
+    text-align: start;
 }
 
 .manga .section .pagination {
