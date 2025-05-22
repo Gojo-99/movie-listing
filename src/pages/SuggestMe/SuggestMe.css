@@ -97,7 +97,15 @@
     color: #FFFFFF;
 }
 
-.suggestme .section .results .anime-results {
+.suggestme .section .results .anime-results h2 {
+    font-size: clamp(16px, 5vw, 32px);
+    font-weight: 600;
+    color: #fff;
+    line-height: 38px;
+    margin-bottom: 10px;
+}
+
+.suggestme .section .results .anime-results .results-grid{
     display: flex;
     justify-content: center;
     gap: 24px;
@@ -177,7 +185,15 @@
     margin-bottom: 8px;
 }
 
-.suggestme .section .results .manga-results {
+.suggestme .section .results .manga-results h2 {
+    font-size: clamp(16px, 5vw, 32px);
+    font-weight: 600;
+    color: #fff;
+    line-height: 38px;
+    margin-bottom: 10px;
+}
+
+.suggestme .section .results .manga-results .results-grid{
     display: flex;
     justify-content: center;
     gap: 24px;
@@ -247,17 +263,42 @@
     object-fit: cover;
 }
 
-.suggestme .section .results .manga-results .card p {
+.suggestme .section .results .manga-results .results-grid .card p {
     font-weight: 600;
     font-size: 16px;
     line-height: 24px;
     letter-spacing: 2%;
     color: #EBEEF5;
     margin-bottom: 8px;
+    text-align: start;
+}
+
+.like button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: inherit;
+    padding: 5px 0;
+    font-size: 14px;
+    color: #fff;
+    font-weight: 500;
+}
+
+.like button:disabled {
+    cursor: default;
+    opacity: 0.7;
+}
+
+.like button img {
+    width: 16px;
+    height: 16px;
 }
 
 @media (max-width: 600px) {
-    .suggestme .section .suggest-block {
+    .suggestme .section .suggest-block, .manga-results, .anime-results h2 {
         text-align: center;
         align-items: center;
     }

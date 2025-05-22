@@ -38,14 +38,15 @@ const Navbar = () => {
 					<div className={`menu ${actived ? 'active' : ''}`}>
 						<div className='box'>
 							<div className='list'>
-								<Link to={'/anime'}>Anime</Link>
-								<Link to={'/manga'}>Manga</Link>
-								<Link to={'/suggestme'}>Suggest me →</Link>
-								<Link to={'/dashboard'}>Dashboard</Link>
+								<Link to={'/anime'} onClick={() => isActived(false)}>Anime</Link>
+								<Link to={'/manga'} onClick={() => isActived(false)}>Manga</Link>
+								<Link to={'/suggestme'} onClick={() => isActived(false)}>Suggest me →</Link>
+								<Link to={'/suggested'} onClick={() => isActived(false)}>Suggested</Link>
+								<Link to={'/dashboard'} onClick={() => isActived(false)}>Dashboard</Link>
 							</div>
 
 							<div className='btns'>
-								<Link to={'/login_page'}>Login →</Link>
+								<Link to={'/login_page'} onClick={() => isActived(false)}>Login →</Link>
 							</div>
 						</div>
 					</div>

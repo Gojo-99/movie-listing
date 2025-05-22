@@ -15,6 +15,7 @@ import AboutManga from "./pages/AboutManga/AboutManga"
 
 import CircularProgress from '@mui/material/CircularProgress'
 import Login from './pages/Login/Login'
+import Suggested from "./pages/Suggested/Suggested"
 
 
 const App = () => {
@@ -68,6 +69,7 @@ const App = () => {
 					<Route path='/anime' element={<Anime page={page} setPage={setPage} />} />
 					<Route path='/manga' element={<Manga page2={page2} setPage2={setPage2} />} />
 					<Route path='/suggestme' element={<SuggestMe />} />
+          <Route path='/suggested' element={<Suggested />} />
 					<Route path='/details_page' element={<Details />} />
 					<Route path='/about_manga' element={<AboutManga />} />
 					<Route path='/login_page' element={<Login />} />

@@ -1,0 +1,144 @@
+.suggested-page {
+    padding-inline: 20px;
+}
+
+.suggested-page .section {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.suggested-page .section h1 {
+    font-weight: 600;
+    font-size: clamp(32px, 5vw, 64px);
+    line-height: clamp(40px, 5vw, 80px);
+    letter-spacing: -2%;
+    color: #EBEEF5;
+    text-align: center;
+    margin-bottom: 10px;
+    margin-top: 80px;
+}
+
+.suggested-page .section .subtitle {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #8E95A9;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.suggested-page .section .sugg-block .empty-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.suggested-page .section .sugg-block .empty-message p {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.suggested-page .section .sugg-block .empty-message .suggest-link {
+    text-decoration: underline;
+    color: #7B6Ef1;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 2%;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.suggested-page .section .sugg-block .suggested-grid {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.suggested-page .section .sugg-block .suggested-grid .card {
+    max-width: 282px;
+    background: #20283ECC;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    backdrop-filter: blur(80px);
+    border-radius: 12px;
+    padding: 8px 8px;
+    transition: all 200ms;
+}
+
+.suggested-page .section .sugg-block .suggested-grid .card:hover {
+    transform: scale(101%);
+}
+
+.suggested-page .section .sugg-block .suggested-grid .poster-box {
+    max-width: 266px;
+    height: 400px;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.suggested-page .section .sugg-block .suggested-grid .poster-box span {
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: #000000A6;
+    backdrop-filter: blur(8px);
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #FFAD49;
+}
+
+.suggested-page .section .sugg-block .suggested-grid .poster-box img {
+    width: 100%;
+    min-width: 266px;
+    height: 400px;
+    object-fit: cover;
+}
+
+.suggested-page .section .sugg-block .suggested-grid .card h3 {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 2%;
+    color: #EBEEF5;
+    margin-bottom: 8px;
+}
+
+.suggested-page .section .sugg-block .suggested-grid .card p {
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 24px;
+    letter-spacing: 2%;
+    color: #EBEEF5;
+    margin-bottom: 8px;
+}
+
+.suggested-page .section .btn-box {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
+.suggested-page .section .btn-box .clear-button {
+    max-width: 200px;
+    border: 2px solid #7B6EF6;
+    border-radius: 100%;
+    background: #7B6EF6;
+    padding: 20px 12px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #FFFFFF;
+    cursor: pointer;
+}

@@ -1,10 +1,8 @@
 import './SuggestMe.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import search from '../../img/Left Icon.png'
-import { Link } from 'react-router-dom'
-
+import { Link, useNavigate } from 'react-router-dom'
 import CircularProgress from '@mui/material/CircularProgress'
-
 import like from '../../img/like.png'
 
 const SuggestMe = () => {
@@ -13,6 +11,15 @@ const SuggestMe = () => {
 	const [mangaResults, setMangaResults] = useState([])
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState(null)
+	const [suggestedItems, setSuggestedItems] = useState([])
+	const navigate = useNavigate()
+
+	useEffect(() => {
+		const savedSuggestions = localStorage.getItem('suggestedItems')
+		if (savedSuggestions) {
+			setSuggestedItems(JSON.parse(savedSuggestions))
+		}
+	}, [])
 
 	const handleSearch = async () => {
 		if (!searchQuery) return
@@ -21,12 +28,10 @@ const SuggestMe = () => {
 		setError(null)
 
 		try {
-			const animeResponse = await fetch(
-				`https://api.jikan.moe/v4/anime?q=${searchQuery}&limit=8`
-			)
-			const mangaResponse = await fetch(
-				`https://api.jikan.moe/v4/manga?q=${searchQuery}&limit=8`
-			)
+			const [animeResponse, mangaResponse] = await Promise.all([
+				fetch(`https://api.jikan.moe/v4/anime?q=${searchQuery}&limit=25`),
+				fetch(`https://api.jikan.moe/v4/manga?q=${searchQuery}&limit=25`),
+			])
 
 			const animeData = await animeResponse.json()
 			const mangaData = await mangaResponse.json()
@@ -39,6 +44,27 @@ const SuggestMe = () => {
 		} finally {
 			setLoading(false)
 		}
+	}
+
+	const handleSuggest = (item, type) => {
+		const newItem = {
+			mal_id: item.mal_id,
+			title: item.title,
+			images: item.images,
+			score: item.score,
+			type: type,
+			date: new Date().toISOString(),
+		}
+
+		const updatedSuggestions = [...suggestedItems, newItem]
+		setSuggestedItems(updatedSuggestions)
+		localStorage.setItem('suggestedItems', JSON.stringify(updatedSuggestions))
+
+		navigate('/suggested', { state: { suggestedItems: updatedSuggestions } })
+	}
+
+	const isAlreadySuggested = id => {
+		return suggestedItems.some(item => item.mal_id === id)
 	}
 
 	return (
@@ -58,9 +84,9 @@ const SuggestMe = () => {
 								placeholder='Search Anime or Manga'
 								value={searchQuery}
 								onChange={e => setSearchQuery(e.target.value)}
+								onKeyDown={e => e.key === 'Enter' && handleSearch()}
 							/>
 						</div>
-
 						<button onClick={handleSearch}>Search</button>
 					</div>
 				</div>
@@ -70,68 +96,92 @@ const SuggestMe = () => {
 						<CircularProgress color='secondary' />
 					</div>
 				)}
-				{error && <p>{error}</p>}
+				{error && <p className='error-message'>{error}</p>}
 
 				<div className='results'>
 					{animeResults.length > 0 && (
 						<div className='anime-results'>
-							{animeResults.map(anime => (
-								<Link
-									to={'/details_page'}
-									key={anime.mal_id}
-									state={{ anime: anime }}
-								>
-									<div className='card'>
-										<div className='poster-box'>
-											<img src={anime.images.webp.large_image_url} alt='' />
-											<span>⁕ {anime.score}</span>
-										</div>
-
-										<p>
-											{anime.title.length > 20
-												? anime.title.substring(0, 20) + '...'
-												: anime.title}
-										</p>
-
+							<h2>Anime Results</h2>
+							<div className='results-grid'>
+								{animeResults.map(anime => (
+									<div key={anime.mal_id} className='card-container'>
+										<Link to={'/details_page'} state={{ anime: anime }}>
+											<div className='card'>
+												<div className='poster-box'>
+													<img
+														src={anime.images?.webp?.large_image_url}
+														alt={anime.title}
+														onError={e => {
+															e.target.src =
+																'https://via.placeholder.com/300x400?text=No+Image'
+														}}
+													/>
+													{anime.score && <span>⁕ {anime.score}</span>}
+												</div>
+												<p>
+													{anime.title.length > 20
+														? anime.title.substring(0, 20) + '...'
+														: anime.title}
+												</p>
+											</div>
+										</Link>
 										<div className='like'>
-											<a href='#'>
-												<img src={like} alt='like-icon' /> Suggest this
-											</a>
+											<button
+												onClick={() => handleSuggest(anime, 'anime')}
+												disabled={isAlreadySuggested(anime.mal_id)}
+											>
+												<img src={like} alt='like-icon' />
+												{isAlreadySuggested(anime.mal_id)
+													? 'Already suggested'
+													: 'Suggest this'}
+											</button>
 										</div>
 									</div>
-								</Link>
-							))}
+								))}
+							</div>
 						</div>
 					)}
 
 					{mangaResults.length > 0 && (
 						<div className='manga-results'>
-							{mangaResults.map(manga => (
-								<Link
-									to={'/about_manga'}
-									key={manga.mal_id}
-									state={{ manga: manga }}
-								>
-									<div className='card'>
-										<div className='poster-box'>
-											<img src={manga.images.webp.large_image_url} alt='' />
-											<span>⁕ {manga.score}</span>
-										</div>
-
-										<p>
-											{manga.title.length > 20
-												? manga.title.substring(0, 20) + '...'
-												: manga.title}
-										</p>
-
+							<h2>Manga Results</h2>
+							<div className='results-grid'>
+								{mangaResults.map(manga => (
+									<div key={manga.mal_id} className='card-container'>
+										<Link to={'/about_manga'} state={{ manga: manga }}>
+											<div className='card'>
+												<div className='poster-box'>
+													<img
+														src={manga.images?.webp?.large_image_url}
+														alt={manga.title}
+														onError={e => {
+															e.target.src =
+																'https://via.placeholder.com/300x400?text=No+Image'
+														}}
+													/>
+													{manga.score && <span>⁕ {manga.score}</span>}
+												</div>
+												<p>
+													{manga.title.length > 20
+														? manga.title.substring(0, 20) + '...'
+														: manga.title}
+												</p>
+											</div>
+										</Link>
 										<div className='like'>
-											<a href='#'>
-												<img src={like} alt='like-icon' /> Suggest this
-											</a>
+											<button
+												onClick={() => handleSuggest(manga, 'manga')}
+												disabled={isAlreadySuggested(manga.mal_id)}
+											>
+												<img src={like} alt='like-icon' />
+												{isAlreadySuggested(manga.mal_id)
+													? 'Already suggested'
+													: 'Suggest this'}
+											</button>
 										</div>
 									</div>
-								</Link>
-							))}
+								))}
+							</div>
 						</div>
 					)}
 				</div>
