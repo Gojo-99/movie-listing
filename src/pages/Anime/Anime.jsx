@@ -10,7 +10,6 @@ const Anime = ({page, setPage}) => {
 	const [animeData, setAnimeData] = useState([])
 	const [loadingPage, setLoadingPage] = useState(false)
 	const [error, setError] = useState(null)
-	// const [page, setPage] = useState(1)
 	const [hasMore, setHasMore] = useState(true)
 
 	const [searchin, setSearchin] = useState('')

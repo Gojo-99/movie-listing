@@ -125,9 +125,9 @@
 }
 
 .suggested-page .section .btn-box {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
+    position: sticky;
+    bottom: 70px;
+    float: right;
 }
 
 .suggested-page .section .btn-box .clear-button {
