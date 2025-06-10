@@ -59,8 +59,6 @@ const SuggestMe = () => {
 		const updatedSuggestions = [...suggestedItems, newItem]
 		setSuggestedItems(updatedSuggestions)
 		localStorage.setItem('suggestedItems', JSON.stringify(updatedSuggestions))
-
-		navigate('/suggested', { state: { suggestedItems: updatedSuggestions } })
 	}
 
 	const isAlreadySuggested = id => {

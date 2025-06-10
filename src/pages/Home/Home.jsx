@@ -7,6 +7,52 @@ import CircularProgress from '@mui/material/CircularProgress'
 
 let debounceTimeout
 
+const allGenres = [
+	{ id: 1, name: 'Action' },
+	{ id: 2, name: 'Adventure' },
+	{ id: 3, name: 'Cars' },
+	{ id: 4, name: 'Comedy' },
+	{ id: 5, name: 'Dementia' },
+	{ id: 6, name: 'Demons' },
+	{ id: 7, name: 'Mystery' },
+	{ id: 8, name: 'Drama' },
+	{ id: 9, name: 'Ecchi' },
+	{ id: 10, name: 'Fantasy' },
+	{ id: 11, name: 'Game' },
+	{ id: 12, name: 'Hentai' },
+	{ id: 13, name: 'Historical' },
+	{ id: 14, name: 'Horror' },
+	{ id: 15, name: 'Kids' },
+	{ id: 16, name: 'Magic' },
+	{ id: 17, name: 'Martial Arts' },
+	{ id: 18, name: 'Mecha' },
+	{ id: 19, name: 'Music' },
+	{ id: 20, name: 'Parody' },
+	{ id: 21, name: 'Samurai' },
+	{ id: 22, name: 'Romance' },
+	{ id: 23, name: 'School' },
+	{ id: 24, name: 'Sci-Fi' },
+	{ id: 25, name: 'Shoujo' },
+	{ id: 26, name: 'Shoujo Ai' },
+	{ id: 27, name: 'Shounen' },
+	{ id: 28, name: 'Shounen Ai' },
+	{ id: 29, name: 'Space' },
+	{ id: 30, name: 'Sports' },
+	{ id: 31, name: 'Super Power' },
+	{ id: 32, name: 'Vampire' },
+	{ id: 33, name: 'Yaoi' },
+	{ id: 34, name: 'Yuri' },
+	{ id: 35, name: 'Harem' },
+	{ id: 36, name: 'Slice of Life' },
+	{ id: 37, name: 'Supernatural' },
+	{ id: 38, name: 'Military' },
+	{ id: 39, name: 'Police' },
+	{ id: 40, name: 'Psychological' },
+	{ id: 41, name: 'Thriller' },
+	{ id: 42, name: 'Seinen' },
+	{ id: 43, name: 'Josei' },
+]
+
 const Home = ({ movie, manga }) => {
 	const [searching, setSearching] = useState('')
 	const [isSearch, setIsSearch] = useState(false)
@@ -23,39 +69,33 @@ const Home = ({ movie, manga }) => {
 	const [searchMangaPage, setSearchMangaPage] = useState(1)
 
 	const [isFetching, setIsFetching] = useState(false)
+	const [selectedGenre, setSelectedGenre] = useState('')
+	const [showFilter, setShowFilter] = useState(false)
 
 	const fetchData = async () => {
 		try {
 			let url = ''
+			const genreParam = selectedGenre ? `&genres=${selectedGenre}` : ''
+
 			if (isSearch && searching.trim()) {
-				if (activeTab === 'anime') {
-					url = `https://api.jikan.moe/v4/anime?q=${searching}&limit=10&page=${searchAnimePage}`
-				} else {
-					url = `https://api.jikan.moe/v4/manga?q=${searching}&limit=10&page=${searchMangaPage}`
-				}
+				url = `https://api.jikan.moe/v4/${activeTab}?q=${searching}&limit=10&page=${
+					activeTab === 'anime' ? searchAnimePage : searchMangaPage
+				}${genreParam}`
 			} else {
-				if (activeTab === 'anime') {
-					url = `https://api.jikan.moe/v4/anime?limit=10&page=${animePage}`
-				} else {
-					url = `https://api.jikan.moe/v4/manga?limit=10&page=${mangaPage}`
-				}
+				url = `https://api.jikan.moe/v4/${activeTab}?limit=10&page=${
+					activeTab === 'anime' ? animePage : mangaPage
+				}${genreParam}`
 			}
 
 			const res = await axios.get(url)
 			const data = res.data.data
 
 			if (isSearch && searching.trim()) {
-				if (activeTab === 'anime') {
-					setSearchedAnime(prev => [...prev, ...data])
-				} else {
-					setSearchedManga(prev => [...prev, ...data])
-				}
+				if (activeTab === 'anime') setSearchedAnime(prev => [...prev, ...data])
+				else setSearchedManga(prev => [...prev, ...data])
 			} else {
-				if (activeTab === 'anime') {
-					setAnimeList(prev => [...prev, ...data])
-				} else {
-					setMangaList(prev => [...prev, ...data])
-				}
+				if (activeTab === 'anime') setAnimeList(prev => [...prev, ...data])
+				else setMangaList(prev => [...prev, ...data])
 			}
 		} catch (err) {
 			console.error('Error loading:', err)
@@ -66,7 +106,6 @@ const Home = ({ movie, manga }) => {
 
 	useEffect(() => {
 		if (!isFetching) return
-
 		if (isSearch) {
 			if (activeTab === 'anime') setSearchAnimePage(p => p + 1)
 			else setSearchMangaPage(p => p + 1)
@@ -88,8 +127,8 @@ const Home = ({ movie, manga }) => {
 	}, [searchAnimePage, searchMangaPage])
 
 	useEffect(() => {
-		if (!isSearch) fetchData()
-	}, [animePage, mangaPage])
+		fetchData()
+	}, [animePage, mangaPage, selectedGenre])
 
 	useEffect(() => {
 		const handleScroll = () => {
@@ -110,7 +149,6 @@ const Home = ({ movie, manga }) => {
 			clearTimeout(debounceTimeout)
 			debounceTimeout = setTimeout(() => {
 				setIsSearch(!!value.trim())
-
 				if (value.trim()) {
 					if (activeTab === 'anime') {
 						setSearchedAnime([])
@@ -131,10 +169,8 @@ const Home = ({ movie, manga }) => {
 	}
 
 	useEffect(() => {
-		if (isSearch && searching.trim()) {
-			fetchData()
-		}
-	}, [activeTab])
+		if (isSearch && searching.trim()) fetchData()
+	}, [activeTab, selectedGenre])
 
 	const displayList =
 		activeTab === 'anime'
@@ -214,6 +250,41 @@ const Home = ({ movie, manga }) => {
 				{isFetching && (
 					<div className='loader'>
 						<CircularProgress color='secondary' />
+					</div>
+				)}
+			</div>
+
+			<div className='floating-filter'>
+				<button
+					className='fab-button'
+					onClick={() => setShowFilter(prev => !prev)}
+				>
+					🎯 Фильтр жанров
+				</button>
+				{showFilter && (
+					<div className='filter-panel'>
+						<label>Жанр:</label>
+						<select
+							value={selectedGenre}
+							onChange={e => {
+								setSelectedGenre(e.target.value)
+								setAnimeList([])
+								setMangaList([])
+								setSearchedAnime([])
+								setSearchedManga([])
+								setAnimePage(1)
+								setMangaPage(1)
+								setSearchAnimePage(1)
+								setSearchMangaPage(1)
+							}}
+						>
+							<option value=''>Все жанры</option>
+							{allGenres.map(g => (
+								<option key={g.id} value={g.id}>
+									{g.name}
+								</option>
+							))}
+						</select>
 					</div>
 				)}
 			</div>

@@ -27,7 +27,10 @@ const Navbar = () => {
 								
 							</li>
 							<li>
-								<Link to={'/suggestme'}>Suggest me →</Link>
+								<Link to={'/suggestme'}>Suggest'me</Link>
+							</li>
+							<li>
+								<Link to={'/suggested'}>Suggested</Link>
 							</li>
 						</ul>
 					</div>
