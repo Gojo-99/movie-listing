@@ -38,8 +38,8 @@ const Suggested = () => {
 					{suggestedItems.length === 0 ? (
 						<div className='empty-message'>
 							<p>You haven't suggested anything yet.</p>
-							<a href='/suggestme' className='suggest-link'>
-								Go to Suggest Me page
+							<a href='/' className='suggest-link'>
+								Go to Home Page 0^0
 							</a>
 						</div>
 					) : (

@@ -1,5 +1,6 @@
 import './Home.css'
 import searchIcon from '../../img/Left Icon.png'
+import like from '../../img/like.png'
 import { Link } from 'react-router-dom'
 import { useState, useEffect, useCallback } from 'react'
 import axios from 'axios'
@@ -71,6 +72,15 @@ const Home = ({ movie, manga }) => {
 	const [isFetching, setIsFetching] = useState(false)
 	const [selectedGenre, setSelectedGenre] = useState('')
 	const [showFilter, setShowFilter] = useState(false)
+
+	const [suggestedItems, setSuggestedItems] = useState([])
+
+	useEffect(() => {
+		const savedSuggestions = localStorage.getItem('suggestedItems')
+		if (savedSuggestions) {
+			setSuggestedItems(JSON.parse(savedSuggestions))
+		}
+	}, [])
 
 	const fetchData = async () => {
 		try {
@@ -168,6 +178,25 @@ const Home = ({ movie, manga }) => {
 		debouncedSearch(e.target.value)
 	}
 
+	const handleSuggest = (item, type) => {
+		const newItem = {
+			mal_id: item.mal_id,
+			title: item.title,
+			images: item.images,
+			score: item.score,
+			type: type,
+			date: new Date().toISOString(),
+		}
+
+		const updatedSuggestions = [...suggestedItems, newItem]
+		setSuggestedItems(updatedSuggestions)
+		localStorage.setItem('suggestedItems', JSON.stringify(updatedSuggestions))
+	}
+
+	const isAlreadySuggested = id => {
+		return suggestedItems.some(item => item.mal_id === id)
+	}
+
 	useEffect(() => {
 		if (isSearch && searching.trim()) fetchData()
 	}, [activeTab, selectedGenre])
@@ -190,7 +219,7 @@ const Home = ({ movie, manga }) => {
 				<div className='hereko'>
 					<h1>AnimePulse</h1>
 					<p>
-						List of anime, I, <span>Pramod Poudel</span> have watched till date.
+						List of anime, I, <span>Marato San</span> have watched till date.
 						Explore what I have watched and also feel free to make a suggestion.
 						😉
 					</p>
@@ -227,12 +256,11 @@ const Home = ({ movie, manga }) => {
 
 				<div className='films'>
 					{displayList.map(item => (
-						<Link
-							key={item.mal_id}
-							to={activeTab === 'anime' ? 'details_page' : '/about_manga'}
-							state={{ [activeTab]: item }}
-						>
-							<div className='card'>
+						<div key={item.mal_id} className='card'>
+							<Link
+								to={activeTab === 'anime' ? 'details_page' : '/about_manga'}
+								state={{ [activeTab]: item }}
+							>
 								<div className='poster-box'>
 									<img src={getImage(item)} alt={item.title} />
 									<span>⁕ {item.score ?? 'N/A'}</span>
@@ -242,16 +270,27 @@ const Home = ({ movie, manga }) => {
 										? item.title.slice(0, 20) + '...'
 										: item.title}
 								</p>
+							</Link>
+							<div className='like'>
+								<button
+									onClick={() => handleSuggest(item, activeTab)}
+									disabled={isAlreadySuggested(item.mal_id)}
+								>
+									<img src={like} alt='like-icon' />
+									{isAlreadySuggested(item.mal_id)
+										? 'Already suggested'
+										: 'Suggest this'}
+								</button>
 							</div>
-						</Link>
+						</div>
 					))}
-				</div>
 
-				{isFetching && (
-					<div className='loader'>
-						<CircularProgress color='secondary' />
-					</div>
-				)}
+					{isFetching && (
+						<div className='loader'>
+							<CircularProgress color='secondary' />
+						</div>
+					)}
+				</div>
 			</div>
 
 			<div className='floating-filter'>

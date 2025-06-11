@@ -27,9 +27,6 @@ const Navbar = () => {
 								
 							</li>
 							<li>
-								<Link to={'/suggestme'}>Suggest'me</Link>
-							</li>
-							<li>
 								<Link to={'/suggested'}>Suggested</Link>
 							</li>
 						</ul>
@@ -43,7 +40,6 @@ const Navbar = () => {
 							<div className='list'>
 								<Link to={'/anime'} onClick={() => isActived(false)}>Anime</Link>
 								<Link to={'/manga'} onClick={() => isActived(false)}>Manga</Link>
-								<Link to={'/suggestme'} onClick={() => isActived(false)}>Suggest me →</Link>
 								<Link to={'/suggested'} onClick={() => isActived(false)}>Suggested</Link>
 								<Link to={'/dashboard'} onClick={() => isActived(false)}>Dashboard</Link>
 							</div>

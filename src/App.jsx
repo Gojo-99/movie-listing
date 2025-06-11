@@ -3,7 +3,6 @@ import Home from "./pages/Home/Home"
 import Navbar from "./components/Navbar/Navbar"
 import Anime from "./pages/Anime/Anime"
 import Manga from './pages/Manga/Manga'
-import SuggestMe from "./pages/SuggestMe/SuggestMe"
 import NotFound404 from "./pages/NotFound404/NotFound404"
 import Details from "./pages/Details/Details"
 
@@ -68,7 +67,6 @@ const App = () => {
 					<Route path='/' element={<Home movie={film} manga={manga} />} />
 					<Route path='/anime' element={<Anime page={page} setPage={setPage} />} />
 					<Route path='/manga' element={<Manga page2={page2} setPage2={setPage2} />} />
-					<Route path='/suggestme' element={<SuggestMe />} />
           <Route path='/suggested' element={<Suggested />} />
 					<Route path='/details_page' element={<Details />} />
 					<Route path='/about_manga' element={<AboutManga />} />
