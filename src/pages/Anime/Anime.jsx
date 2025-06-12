@@ -1,18 +1,19 @@
 import './Anime.css'
 import search from '../../img/Left Icon.png'
+import like from '../../img/like.png'
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { fetchAnimeData } from '../../MoreUrl'
 import CircularProgress from '@mui/material/CircularProgress'
 
-
-const Anime = ({page, setPage}) => {
+const Anime = ({ page, setPage }) => {
 	const [animeData, setAnimeData] = useState([])
 	const [loadingPage, setLoadingPage] = useState(false)
 	const [error, setError] = useState(null)
 	const [hasMore, setHasMore] = useState(true)
 
 	const [searchin, setSearchin] = useState('')
+	const [suggestedItems, setSuggestedItems] = useState([])
 
 	const loadPageData = async (currentPage, searchQuery = '') => {
 		setLoadingPage(true)
@@ -36,6 +37,13 @@ const Anime = ({page, setPage}) => {
 		loadPageData(page, searchin)
 	}, [page, searchin])
 
+	useEffect(() => {
+		const savedSuggestions = localStorage.getItem('suggestedItems')
+		if (savedSuggestions) {
+			setSuggestedItems(JSON.parse(savedSuggestions))
+		}
+	}, [])
+
 	const handleNextPage = () => {
 		if (hasMore && !loadingPage) {
 			setPage(prevPage => prevPage + 1)
@@ -49,8 +57,27 @@ const Anime = ({page, setPage}) => {
 	}
 
 	const handleSearchChange = e => {
-		setPage(1) 
+		setPage(1)
 		setSearchin(e.target.value)
+	}
+
+	const handleSuggest = e => {
+		const newItem = {
+			mal_id: e.mal_id,
+			title: e.title,
+			images: e.images,
+			score: e.score,
+			type: 'anime',
+			date: new Date().toISOString(),
+		}
+
+		const updatedSuggestions = [...suggestedItems, newItem]
+		setSuggestedItems(updatedSuggestions)
+		localStorage.setItem('suggestedItems', JSON.stringify(updatedSuggestions))
+	}
+
+	const isAlreadySuggested = id => {
+		return suggestedItems.some(e => e.mal_id === id)
 	}
 
 	if (loadingPage && searchin.trim() === '') {
@@ -86,20 +113,31 @@ const Anime = ({page, setPage}) => {
 
 				<div className='movie-block'>
 					{animeData.map(e => (
-						<Link to={'/details_page'} key={e.mal_id} state={{ anime: e }}>
-							<div className='card'>
+						<div className='card' key={e.mal_id}>
+							<Link to={'/details_page'} state={{ anime: e }}>
 								<div className='poster-box'>
-									<img src={e.images.webp.large_image_url} alt='' />
+									<img src={e.images.webp.large_image_url} alt={e.title} />
 									<span>⁕ {e.score}</span>
 								</div>
-
 								<p>
 									{e.title.length > 20
 										? e.title.substring(0, 20) + '...'
 										: e.title}
 								</p>
+							</Link>
+
+							<div className='like'>
+								<button
+									onClick={() => handleSuggest(e)}
+									disabled={isAlreadySuggested(e.mal_id)}
+								>
+									<img src={like} alt='like-icon' />
+									{isAlreadySuggested(e.mal_id)
+										? 'Already suggested'
+										: 'Suggest this'}
+								</button>
 							</div>
-						</Link>
+						</div>
 					))}
 				</div>
 

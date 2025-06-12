@@ -87,7 +87,7 @@
 	background: #20283ecc;
 	display: flex;
 	flex-direction: column;
-	gap: 16px;
+	gap: 10px;
 	backdrop-filter: blur(80px);
 	border-radius: 12px;
 	padding: 8px 8px;
@@ -132,7 +132,7 @@
 	line-height: 24px;
 	letter-spacing: 2%;
 	color: #ebeef5;
-	margin-bottom: 8px;
+	margin: 8px 0px;
 }
 
 .home .section .tab-switcher {
@@ -252,6 +252,7 @@
     width: 16px;
     height: 16px;
 }
+
 
 @media (max-width: 600px) {
 	.home .section .hereko {
