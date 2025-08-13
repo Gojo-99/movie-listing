@@ -298,11 +298,11 @@ const Home = ({ movie, manga }) => {
 					className='fab-button'
 					onClick={() => setShowFilter(prev => !prev)}
 				>
-					🎯 Фильтр жанров
+					🎯 Filter
 				</button>
 				{showFilter && (
 					<div className='filter-panel'>
-						<label>Жанр:</label>
+						<label>Genre:</label>
 						<select
 							value={selectedGenre}
 							onChange={e => {
@@ -317,7 +317,7 @@ const Home = ({ movie, manga }) => {
 								setSearchMangaPage(1)
 							}}
 						>
-							<option value=''>Все жанры</option>
+							<option value=''>All Genres</option>
 							{allGenres.map(g => (
 								<option key={g.id} value={g.id}>
 									{g.name}
